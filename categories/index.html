@@ -41,8 +41,8 @@
     
 
     <title>
-          
-            kirakira☆☆闪闪发光
+        
+            categories | kirakira☆☆闪闪发光
         
     </title>
 <meta name="generator" content="Hexo 4.2.0"></head>
@@ -159,26 +159,33 @@
 </aside>
   
   <main id="main-contain" class="mdui-container mdui-m-t-5">
+    <div class="mdui-card mdui-p-a-2 mdui-m-b-5">
+    <div class="post-header"> 
+        <a class="post-header-title" href="/categories/index.html">categories</a>
+    </div>
     
-    
-    
-
-
-<div class="mdui-card mdui-p-a-4 mdui-m-b-5">
-    <div class="posts-collapse">
-        <div class="collection-title">
-            <h2>tags<small>标签</small></h2>
-        </div>
-        
-            <div class="collection-item">
-                <h3><a href="/2020/03/05/test/">hello</a></h3>
-                <time itemprop="dateCreated" datetime=2020-03-05 >
-                    2020.03.5
-                </time>
-            </div>
         
     </div>
-</div>
+    
+    <div id="comment" class="mdui-card mdui-p-a-2 mdui-m-b-5">
+      <div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+    clientID: '',
+    clientSecret: '',
+    repo: '',
+    owner: '',
+    admin: [''],
+    id:  md5(location.pathname) ,
+    distractionFreeMode: 'true',
+  });
+  gitalk.render('gitalk-container');
+</script>
+    </div>
+
 
 
   </main>
