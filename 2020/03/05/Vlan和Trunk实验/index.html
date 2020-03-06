@@ -264,8 +264,6 @@
   <div class="mdui-card-content mdui-typo">
     <hr>
 <h3 id="实验拓扑"><a href="#实验拓扑" class="headerlink" title="实验拓扑"></a>实验拓扑</h3><p><img src="/2020/03/05/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/tuopu.png" alt="实验拓扑图"></p>
-
-
 <hr>
 <h3 id="实验需求"><a href="#实验需求" class="headerlink" title="实验需求"></a>实验需求</h3><ol>
 <li>按图示为 PC 配置 IP 地址</li>
@@ -274,7 +272,10 @@
 <li>测试效果，同一 VLAN 的 PC 可以互通，不同 VLAN 的 PC 无法互通</li>
 </ol>
 <hr>
-<h3 id="实验解法"><a href="#实验解法" class="headerlink" title="实验解法"></a>实验解法</h3><h6 id="1-PC配置IP地址"><a href="#1-PC配置IP地址" class="headerlink" title="1. PC配置IP地址"></a>1. PC配置IP地址</h6><p><img src="/2020/03/05/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/1583478019813.png" alt="PC3的配置；PC4,PC5,PC6类似"></p>
+<h3 id="实验解法"><a href="#实验解法" class="headerlink" title="实验解法"></a>实验解法</h3><h6 id="1-PC配置IP地址"><a href="#1-PC配置IP地址" class="headerlink" title="1. PC配置IP地址"></a>1. PC配置IP地址</h6><p><img src="/2020/03/05/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/PC3%E7%9A%84%E9%85%8D%E7%BD%AE.png" alt="PC3的配置；PC4,PC5,PC6类似"></p>
+<blockquote>
+<p>PC4,PC5,PC6的配置PC3类似</p>
+</blockquote>
 <h5 id="2-SW1-和-SW2-上分别创建-VLAN-10-和-VLAN-20"><a href="#2-SW1-和-SW2-上分别创建-VLAN-10-和-VLAN-20" class="headerlink" title="2. SW1 和 SW2 上分别创建 VLAN 10 和 VLAN 20"></a>2. SW1 和 SW2 上分别创建 VLAN 10 和 VLAN 20</h5><p> <em>步骤 1：在 SW1 上创建 VLAN 10 和 VLAN 20</em></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[sw1]vlan 10</span><br><span class="line">[sw1-vlan10]vlan 20 </span><br><span class="line">[sw1-vlan20]</span><br></pre></td></tr></table></figure>
 <p> <em>步骤2：在 SW2 上创建 VLAN 10 和 VLAN 20</em><br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[sw2]vlan 10 </span><br><span class="line">[sw2-vlan10]vlan 20 </span><br><span class="line">[sw2-vlan20]</span><br></pre></td></tr></table></figure></p>
@@ -285,9 +286,9 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[sw2-vlan20]interface g1&#x2F;0&#x2F;3 </span><br><span class="line">[sw2-GigabitEthernet1&#x2F;0&#x2F;3]port link-type trunk </span><br><span class="line">[sw2-GigabitEthernet1&#x2F;0&#x2F;3]port trunk permit vlan 10 20</span><br></pre></td></tr></table></figure>
 <h5 id="5-测试结果，如下所示，PC3可以ping通PC5，但无法ping通"><a href="#5-测试结果，如下所示，PC3可以ping通PC5，但无法ping通" class="headerlink" title="5. 测试结果，如下所示，PC3可以ping通PC5，但无法ping通"></a>5. 测试结果，如下所示，PC3可以ping通PC5，但无法ping通</h5><p><em>步骤1: 在PC3上pingPC4， 发现不能ping通PC4和PC6</em></p>
 <p><em>步骤2: 在PC3上pingPC5， 发现可以ping通</em></p>
-<p><img src="/2020/03/05/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/1583479213389.png" alt="PC3可以ping通PC5"></p>
+<p><img src="/2020/03/05/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/ping5.png" alt="PC3可以ping通PC5"></p>
 <p><em>步骤3: 在PC3上pingPC6， 发现不能ping通</em></p>
-<p><img src="/2020/03/05/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/1583479284284.png" alt="PC3不能ping通PC6"></p>
+<p><img src="/2020/03/05/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/ping6.png" alt="PC3不能ping通PC6"></p>
 
   </div>
   <!--文末结束语-->
