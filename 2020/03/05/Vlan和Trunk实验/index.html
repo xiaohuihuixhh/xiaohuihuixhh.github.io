@@ -269,7 +269,8 @@
 <li>按图示为 PC 配置 IP 地址</li>
 <li>SW1 和 SW2 上分别创建 VLAN 10 和 VLAN 20，要求 PC3 和 PC5 属于 VLAN 10 ，PC4 和 PC6 属于 VLAN 20 </li>
 <li>SW1 和 SW2 相连的接口配置成 trunk 类型，允 许 VLAN 10 和 VLAN 20 通过</li>
-<li>测试效果，同一 VLAN 的 PC 可以互通，不同 VLAN 的 PC 无法互通</li>
+<li>测试效果，同一 VLAN 的 PC 可以互通，不同 VLAN 的 PC 无法互通<a id="more"></a>
+</li>
 </ol>
 <hr>
 <h3 id="实验解法"><a href="#实验解法" class="headerlink" title="实验解法"></a>实验解法</h3><h6 id="1-PC配置IP地址"><a href="#1-PC配置IP地址" class="headerlink" title="1. PC配置IP地址"></a>1. PC配置IP地址</h6><p><img src="/2020/03/05/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/PC3%E7%9A%84%E9%85%8D%E7%BD%AE.png" alt="PC3的配置；PC4,PC5,PC6类似"></p>
@@ -339,25 +340,6 @@
 
 
 
-    <div id="comment" class="mdui-card mdui-p-a-2 mdui-m-b-5">
-      <div id="gitalk-container"></div>
-<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
-<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
-<script>
-  var gitalk = new Gitalk({
-    clientID: '',
-    clientSecret: '',
-    repo: '',
-    owner: '',
-    admin: [''],
-    id:  md5(location.pathname) ,
-    distractionFreeMode: 'true',
-  });
-  gitalk.render('gitalk-container');
-</script>
-    </div>
-
   </main>
   <footer id="footer" class="mdui-text-center mdui-m-t-5 mdui-p-b-2 mdui-p-t-4 mdui-color-theme">
   <div class="mdui-container">
@@ -373,7 +355,7 @@
         sanapri
       </span>
     </div>
-    <div class="mdui-row">
+    <!--<div class="mdui-row">
       
         <div class="mdui-col-xs-6 mdui-text-right">
           <span>Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a></span>
@@ -382,7 +364,7 @@
           <span>Theme: <a href="https://github.com/kb1000fx/Meadow" rel="noopener" target="_blank">Meadow</a></span>
         </div>
       
-    </div>
+    </div>-->
     <div class="mdui-row">
       
         <div class="mdui-col-xs-6 mdui-text-right">
