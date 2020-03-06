@@ -47,6 +47,7 @@
     </title>
 <meta name="generator" content="Hexo 4.2.0"></head>
 <body class="mdui-drawer-body-left mdui-appbar-with-toolbar mdui-theme-primary-white mdui-theme-accent-white">
+
   
   <header class="mdui-appbar mdui-appbar-fixed">
   <div id="toolbar" class="mdui-toolbar mdui-color-theme">
@@ -263,7 +264,6 @@
 
 <a id="more"></a>
 
-<blockquote class="blockquote-center">优秀的人，不是不合群，而是他们合群的人里面没有你</blockquote>
 
 <blockquote>
 <p>长牙四足<br>破门而开只见黔须半部<br>一人曾去目<br>孤心伫立待得日当正中<br>断角文几残画虎<br>凭一口难辨是非<br>唯有默语直书<br>盼众人皆得正言<br>俯耳听闻磬上风骨<br>双车一寸<br>一番偏言何以对敌正主<br>有暇人无玉<br>黄鹊非鸟唯有一人堪缚<br>对月相连<br>禾首枝相互<br>头十载无心日出<br>横平竖直点捺勾折皆变化<br>笔走龙蛇莫书春秋满潇洒<br>不见当初前人秉刀金竹上刻画<br>言缀成文虽千载仍生花<br>聊以数笔写过古今的繁华<br>出经入点顾自将历史传达<br>谜纵千年又有谁能回答<br>以何相系华夏<br>对端砚点朱砂</p>
@@ -332,7 +332,7 @@
       <span>
         &copy; 2020 
         
-          <i style="color:#d9333f" class="fas fa-heart"></i>
+          <i style="color:#ffb3a7" class="fas fa-heart"></i>
         
         sanapri
       </span>
@@ -381,8 +381,12 @@
 <script src="/js/mdui.min.js"></script>
 <script src="/js/meadow.js"></script>
 
-  {% if theme.canvas_nest %}
-<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
-{% endif %}
+ <!--动态线条背景-->
+
+    <script type="text/javascript" color="0, 0, 0" opacity="0.8" 
+        zIndex="-1" count="99" 
+        src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+    </script>
+
 </body>
 </html >

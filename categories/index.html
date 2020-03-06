@@ -47,6 +47,7 @@
     </title>
 <meta name="generator" content="Hexo 4.2.0"></head>
 <body class="mdui-drawer-body-left mdui-appbar-with-toolbar mdui-theme-primary-white mdui-theme-accent-white">
+
   
   <header class="mdui-appbar mdui-appbar-fixed">
   <div id="toolbar" class="mdui-toolbar mdui-color-theme">
@@ -169,7 +170,7 @@
     </div>
     
         <div class="page-describe">
-    目前共计 5 个分类
+    目前共计 4 个分类
 </div>
 
 <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9F%B3%E4%B9%90/">音乐</a><span class="category-list-count">1</span></li></ul>
@@ -186,7 +187,7 @@
       <span>
         &copy; 2020 
         
-          <i style="color:#d9333f" class="fas fa-heart"></i>
+          <i style="color:#ffb3a7" class="fas fa-heart"></i>
         
         sanapri
       </span>
@@ -235,8 +236,12 @@
 <script src="/js/mdui.min.js"></script>
 <script src="/js/meadow.js"></script>
 
-  {% if theme.canvas_nest %}
-<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
-{% endif %}
+ <!--动态线条背景-->
+
+    <script type="text/javascript" color="0, 0, 0" opacity="0.8" 
+        zIndex="-1" count="99" 
+        src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+    </script>
+
 </body>
 </html >
