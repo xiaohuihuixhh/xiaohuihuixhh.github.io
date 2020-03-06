@@ -205,7 +205,7 @@
       
       
         <div class="post-header"> 
-  <a class="post-header-title" href="/2020/03/05/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/">Vlan和Trunk实验</a>
+  <a class="post-header-title" href="/2020/03/05/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/">Vlan和Trunk实验</a>
   <div class="post-header-meta">
     <span>
       <i class="fa fa-calendar"></i>
@@ -213,11 +213,11 @@
     </span>
     <span>
       <i class="fa fa-calendar-check"></i>
-      更新于:&nbsp;2020-03-05
+      更新于:&nbsp;2020-03-06
     </span>
     <span>
       <i class="fa fa-folder"></i>
-      分类于:&nbsp;
+      分类于:&nbsp;<a class="category-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
     </span>
     
   </div>
@@ -232,14 +232,44 @@
         <p class="post-abstract">
           
             
+实验拓扑
+
+
+
+实验需求
+按图示为 PC 配置 IP 地址
+SW1 和 SW2 上分别创建 VLAN 10 和 VLAN 20，要求 PC3 和 PC5 属于 VLAN 10 ，PC4 和 PC6 属于 VLAN 20 
+SW1 和 SW2 相连的接口配置成 trunk 类型，允 许 VLAN 10 和 VLAN 20 通过
+测试效果，同一 VLAN 的 PC 可以互通，不同 VLAN 的 PC 无法互通
+
+
+实验解法1. PC配置IP地址
+2. SW1 和 SW2 上分别创建 VLAN 10 和 VLAN 20 步骤 1：在 SW1 上创建 VLAN 10 和 VLAN 20
+123...
           
         </p>
         
         <div style="text-align:center;">
-          <a class="post-readmore mdui-btn mdui-ripple mdui-btn-raised" href="/2020/03/05/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/">阅读更多</a>
+          <a class="post-readmore mdui-btn mdui-ripple mdui-btn-raised" href="/2020/03/05/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/">阅读更多</a>
         </div>
       </div>
       
+    <div class="post-tags">
+      
+        <i class="fas fa-tag">
+          <a rel="tag" href = /tags/%E7%BD%91%E7%BB%9C/ >网络</a>
+        </i>
+      
+        <i class="fas fa-tag">
+          <a rel="tag" href = /tags/H3C/ >H3C</a>
+        </i>
+      
+        <i class="fas fa-tag">
+          <a rel="tag" href = /tags/%E8%B7%AF%E7%94%B1%E4%BA%A4%E6%8D%A2/ >路由交换</a>
+        </i>
+      
+    </div>
+
     </article>
 
 

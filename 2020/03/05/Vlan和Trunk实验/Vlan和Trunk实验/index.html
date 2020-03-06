@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    
+    <meta name="renderer" content="webkit"/>
+    <meta name="force-rendering" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <script>if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMode)) window.location.href="https://support.dmeng.net/upgrade-your-browser.html?referrer="+encodeURIComponent(window.location.href); </script>
+    
+        <link rel="shortcut icon" href="/icons/favicon.ico">
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/mdui.min.css">
+<link rel="stylesheet" href="/css/main.css">
+
+    
+<link rel="stylesheet" href="//lib.baomitu.com/font-awesome/5.11.2/css/all.min.css">
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+          
+
+    
+
+
+    
+
+    <title>
+        
+            Vlan和Trunk实验 | kirakira☆☆闪闪发光
+        
+    </title>
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body class="mdui-drawer-body-left mdui-appbar-with-toolbar mdui-theme-primary-white mdui-theme-accent-pink">
+  
+  <header class="mdui-appbar mdui-appbar-fixed">
+  <div id="toolbar" class="mdui-toolbar mdui-color-theme">
+    <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#sidebar', swipe: true}"><i class="mdui-icon material-icons">menu</i></a>
+    <a href="/" class="mdui-typo-headline">kirakira☆☆闪闪发光</a>
+    <a href="/" class="header-subtitle mdui-typo-headline"></a>
+    <div class="mdui-toolbar-spacer"></div>
+    <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-dialog="{target: '#search'}" mdui-tooltip="{content: 'search'}"><i class="mdui-icon material-icons">search</i></a>
+  </div>
+</header>
+
+<div class="mdui-dialog" id="search">
+  
+    <div class="search-form">
+      <input type="search" class="search-form-input" placeholder="请输入关键字">
+    </div>
+    <div class="search-result" data-resource="/search.xml"></div>
+  
+</div>
+
+  <aside id="sidebar" class="mdui-drawer">
+    <div class="mdui-tab" mdui-tab>
+        <a href="#sidebar-tab1" id="sidebartab" class="mdui-ripple mdui-tab-active">站点概览</a>
+        <a href="#sidebar-tab2" id="sidebartab" class="mdui-ripple">关于</a>
+    </div>
+
+    
+    <div id="sidebar-tab1" class="mdui-p-a-2">
+        <div class="mdui-list">
+            
+                
+                <a href="/" class="mdui-list-item mdui-ripple">
+                    <i class="mdui-list-item-icon mdui-icon material-icons">home</i>
+                    <div class="mdui-list-item-content">主页</div>
+                </a>
+            
+                
+                <a href="/tags/" class="mdui-list-item mdui-ripple">
+                    <i class="mdui-list-item-icon mdui-icon material-icons">bookmark</i>
+                    <div class="mdui-list-item-content">标签</div>
+                </a>
+            
+                
+                <a href="/categories/" class="mdui-list-item mdui-ripple">
+                    <i class="mdui-list-item-icon mdui-icon material-icons">folder</i>
+                    <div class="mdui-list-item-content">分类</div>
+                </a>
+            
+                
+                <a href="/archives/" class="mdui-list-item mdui-ripple">
+                    <i class="mdui-list-item-icon mdui-icon material-icons">archive</i>
+                    <div class="mdui-list-item-content">归档</div>
+                </a>
+            
+            <div class="mdui-list-item mdui-ripple">
+                <i class="mdui-list-item-icon mdui-icon material-icons">brightness_2</i>
+                <div class="mdui-list-item-content">夜间模式</div>
+                <label class="mdui-switch" id="darkmode">
+                  <input type="checkbox" id="nightmode_switch"/>
+                  <i class="mdui-switch-icon"></i>
+                </label>
+            </div>           
+        </div>
+    </div>
+
+    
+    <div id="sidebar-tab2" class="mdui-p-a-2">
+        <div class="sidebar-overview">
+            <div class="sidebar-avatar">
+                
+                    <img src="/icons/avatar.gif"/>
+                
+            </div>
+            <div class="sidebar-author-name">sanapri</div>
+            <div class="sidebar-description"></div>
+        </div>
+        <div class="sidebar-links">
+            
+                
+                <div class="mdui-chip">
+                    <span class="mdui-chip-icon"><i class="fas fa-envelope"></i></span>
+                    <a href="mailto:xiaohuihuixhh@gmail.com" class="mdui-chip-title">E-Mail</a>
+                </div>
+            
+                
+                <div class="mdui-chip">
+                    <span class="mdui-chip-icon"><i class="fab fa-weibo"></i></span>
+                    <a href="https://weibo.com/u/6439691522" target="_blank" rel="noopener" class="mdui-chip-title">Weibo</a>
+                </div>
+            
+        </div>
+    </div>
+    <div class="mdui-divider"></div>
+    
+    
+        <div class="adsense-contain">
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Sidebar Ads -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5888225880131847"
+     data-ad-slot="4752632688"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+	 
+</script>
+
+        </div>
+
+    
+	
+</aside>
+  
+  <main id="main-contain" class="mdui-container mdui-m-t-5">
+    <article id="article" class="mdui-card mdui-p-a-2 mdui-m-b-5">
+  <header class="mdui-card-media">
+    
+    
+      <div class="post-header"> 
+  <a class="post-header-title" href="/2020/03/05/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/">Vlan和Trunk实验</a>
+  <div class="post-header-meta">
+    <span>
+      <i class="fa fa-calendar"></i>
+      发布于:&nbsp;2020-03-05
+    </span>
+    <span>
+      <i class="fa fa-calendar-check"></i>
+      更新于:&nbsp;2020-03-06
+    </span>
+    <span>
+      <i class="fa fa-folder"></i>
+      分类于:&nbsp;<a class="category-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
+    </span>
+    
+      <span>
+        <i class="fa fa-eye"></i>
+        阅读次数:&nbsp;
+        <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+      </span>
+    
+  </div>
+</div>   
+    
+
+
+
+    
+    
+    <div class="mdui-card-menu">
+    
+      <button class="mdui-btn mdui-btn-icon mdui-text-color-teal" mdui-menu="{target: '#share_menu', align: 'right'}"><i class="mdui-icon material-icons">share</i></button>
+      <ul class="mdui-menu" id="share_menu">
+        <li class="mdui-menu-item">
+          <a href="http://service.weibo.com/share/share.php?appkey=&title=Vlan和Trunk实验&url=http://sna.ink/2020/03/05/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/&pic=http://sna.ink/null&searchPic=false&style=simple" target="_blank" class="mdui-ripple">分享到 Weibo</a>
+        </li>
+        <li class="mdui-menu-item">
+          <a href="https://twitter.com/intent/tweet?text=Vlan和Trunk实验&url=http://sna.ink/2020/03/05/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/&via=sanapri" target="_blank" class="mdui-ripple">分享到 Twitter</a>
+        </li>
+        <li class="mdui-menu-item">
+          <a href="https://www.facebook.com/sharer/sharer.php?u=http://sna.ink/2020/03/05/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/" target="_blank" class="mdui-ripple">分享到 Facebook</a>
+        </li>
+        <li class="mdui-menu-item">
+          <a href="https://plus.google.com/share?url=http://sna.ink/2020/03/05/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/" target="_blank" class="mdui-ripple">分享到 Google+</a>
+        </li>
+        <li class="mdui-menu-item">
+          <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://sna.ink/2020/03/05/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/&title=Vlan和Trunk实验" target="_blank" class="mdui-ripple">分享到 LinkedIn</a>
+        </li>
+        <li class="mdui-menu-item">
+          <a href="http://connect.qq.com/widget/shareqq/index.html?site=kirakira☆☆闪闪发光&title=Vlan和Trunk实验&summary=&pics=http://sna.ink/null&url=http://sna.ink/2020/03/05/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/" target="_blank" class="mdui-ripple">分享到 QQ</a>
+        </li>
+        <li class="mdui-menu-item">
+          <a href="https://telegram.me/share/url?url=http://sna.ink/2020/03/05/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/&text=Vlan和Trunk实验" target="_blank" class="mdui-ripple">分享到 Telegram</a>
+        </li>
+      </ul>
+    
+  </div>
+  </header>
+  
+  
+    <div class="adsense-contain">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Banner Ads -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5888225880131847"
+     data-ad-slot="3949852758"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+  
+  
+  
+    <div class="post-tags">
+      
+        <i class="fas fa-tag">
+          <a rel="tag" href = /tags/%E7%BD%91%E7%BB%9C/ >网络</a>
+        </i>
+      
+        <i class="fas fa-tag">
+          <a rel="tag" href = /tags/H3C/ >H3C</a>
+        </i>
+      
+        <i class="fas fa-tag">
+          <a rel="tag" href = /tags/%E8%B7%AF%E7%94%B1%E4%BA%A4%E6%8D%A2/ >路由交换</a>
+        </i>
+      
+    </div>
+
+  
+  <div class="mdui-card-content mdui-typo">
+    <hr>
+<h3 id="实验拓扑"><a href="#实验拓扑" class="headerlink" title="实验拓扑"></a>实验拓扑</h3>
+
+
+<hr>
+<h3 id="实验需求"><a href="#实验需求" class="headerlink" title="实验需求"></a>实验需求</h3><ol>
+<li>按图示为 PC 配置 IP 地址</li>
+<li>SW1 和 SW2 上分别创建 VLAN 10 和 VLAN 20，要求 PC3 和 PC5 属于 VLAN 10 ，PC4 和 PC6 属于 VLAN 20 </li>
+<li>SW1 和 SW2 相连的接口配置成 trunk 类型，允 许 VLAN 10 和 VLAN 20 通过</li>
+<li>测试效果，同一 VLAN 的 PC 可以互通，不同 VLAN 的 PC 无法互通</li>
+</ol>
+<hr>
+<h3 id="实验解法"><a href="#实验解法" class="headerlink" title="实验解法"></a>实验解法</h3><h6 id="1-PC配置IP地址"><a href="#1-PC配置IP地址" class="headerlink" title="1. PC配置IP地址"></a>1. PC配置IP地址</h6><p><img src="/2020/03/05/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/1583478019813.png" alt="PC3的配置；PC4,PC5,PC6类似"></p>
+<h5 id="2-SW1-和-SW2-上分别创建-VLAN-10-和-VLAN-20"><a href="#2-SW1-和-SW2-上分别创建-VLAN-10-和-VLAN-20" class="headerlink" title="2. SW1 和 SW2 上分别创建 VLAN 10 和 VLAN 20"></a>2. SW1 和 SW2 上分别创建 VLAN 10 和 VLAN 20</h5><p> <em>步骤 1：在 SW1 上创建 VLAN 10 和 VLAN 20</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[sw1]vlan 10</span><br><span class="line">[sw1-vlan10]vlan 20 </span><br><span class="line">[sw1-vlan20]</span><br></pre></td></tr></table></figure>
+<p> <em>步骤2：在 SW2 上创建 VLAN 10 和 VLAN 20</em><br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[sw2]vlan 10 </span><br><span class="line">[sw2-vlan10]vlan 20 </span><br><span class="line">[sw2-vlan20]</span><br></pre></td></tr></table></figure></p>
+<h5 id="3-SW1-和-SW2-都把-g1-0-1-接口加入-VLAN-10，g1-0-2-接口加入-VLAN-20"><a href="#3-SW1-和-SW2-都把-g1-0-1-接口加入-VLAN-10，g1-0-2-接口加入-VLAN-20" class="headerlink" title="3. SW1 和 SW2 都把 g1/0/1 接口加入 VLAN 10，g1/0/2 接口加入 VLAN 20"></a>3. SW1 和 SW2 都把 g1/0/1 接口加入 VLAN 10，g1/0/2 接口加入 VLAN 20</h5><p>  <em>步骤1：在 SW1 上把 g1/0/1接口加入到VLAN 10， 把g1/0/2 接口加入到 VLAN 20</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[sw1]vlan 10 </span><br><span class="line">[sw1-vlan10]port g1&#x2F;0&#x2F;1 </span><br><span class="line">[sw1-vlan10]vlan 20 </span><br><span class="line">[sw1-vlan20]port g1&#x2F;0&#x2F;2</span><br></pre></td></tr></table></figure>
+<p> <em>步骤2：在 SW1 上把g1/0/1接口加入到VLAN 10， 把g1/0/2接口加入到VLAN 20</em><br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[sw2]vlan 10 </span><br><span class="line">[sw2-vlan10]port g1&#x2F;0&#x2F;1 </span><br><span class="line">[sw2-vlan10]vlan 20 </span><br><span class="line">[sw2-vlan20]port g1&#x2F;0&#x2F;2</span><br></pre></td></tr></table></figure></p>
+<h5 id="4-SW1和SW2的g1-0-3接口都配置为trunk，允许VLAN-10和VLAN-20-通过"><a href="#4-SW1和SW2的g1-0-3接口都配置为trunk，允许VLAN-10和VLAN-20-通过" class="headerlink" title="4. SW1和SW2的g1/0/3接口都配置为trunk，允许VLAN 10和VLAN 20 通过"></a>4. SW1和SW2的g1/0/3接口都配置为trunk，允许VLAN 10和VLAN 20 通过</h5><p> <em>步骤1: 在SW1上把g1/0/3接口配置为Trunk类型， 并允许VLAN 10 和VLAN 20通过</em><br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[sw1-vlan20]interface g1&#x2F;0&#x2F;3 </span><br><span class="line">[sw1-GigabitEthernet1&#x2F;0&#x2F;3]port link-type trunk </span><br><span class="line">[sw1-GigabitEthernet1&#x2F;0&#x2F;3]port trunk permit vlan 10 20</span><br></pre></td></tr></table></figure><br> <em>步骤2: 在SW2上把g1/0/3接口配置为Trunk类型， 并允许VLAN 10 和VLAN 20通过</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[sw2-vlan20]interface g1&#x2F;0&#x2F;3 </span><br><span class="line">[sw2-GigabitEthernet1&#x2F;0&#x2F;3]port link-type trunk </span><br><span class="line">[sw2-GigabitEthernet1&#x2F;0&#x2F;3]port trunk permit vlan 10 20</span><br></pre></td></tr></table></figure>
+<h5 id="5-测试结果，如下所示，PC3可以ping通PC5，但无法ping通"><a href="#5-测试结果，如下所示，PC3可以ping通PC5，但无法ping通" class="headerlink" title="5. 测试结果，如下所示，PC3可以ping通PC5，但无法ping通"></a>5. 测试结果，如下所示，PC3可以ping通PC5，但无法ping通</h5><p><em>步骤1: 在PC3上pingPC4， 发现不能ping通PC4和PC6</em></p>
+<p><em>步骤2: 在PC3上pingPC5， 发现可以ping通</em></p>
+<p><img src="/2020/03/05/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/1583479213389.png" alt="PC3可以ping通PC5"></p>
+<p><em>步骤3: 在PC3上pingPC6， 发现不能ping通</em></p>
+<p><img src="/2020/03/05/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/1583479284284.png" alt="PC3不能ping通PC6"></p>
+
+  </div>
+  <!--文末结束语-->
+  
+    <div style="text-align:center;color: #ccc;font-size:24px;"> --- 本文结束 <i class="fa fa-heartbeat"></i> The End --- </div>
+  
+  <!--页脚广告-->
+  
+    <div class="adsense-contain">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Footer Ads -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5888225880131847"
+     data-ad-slot="2212253348"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+  
+  </br><div class="mdui-divider-inset"></div>
+  
+  <nav>
+    
+    
+  </nav>
+</article>
+
+
+
+
+  <div class="toc-button">
+    <button class="mdui-fab mdui-ripple mdui-color-teal" mdui-menu="{target: '#toc'}"><i class="mdui-icon material-icons">format_list_numbered</i></button>
+    <ul class="mdui-menu" id="toc">
+      <li class="mdui-menu-item">
+        <a href="/2020/03/05/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/" id="toc-header" class="mdui-ripple">文章目录</a>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#实验拓扑"><span class="toc-number">1.</span> <span class="toc-text">实验拓扑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实验需求"><span class="toc-number">2.</span> <span class="toc-text">实验需求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实验解法"><span class="toc-number">3.</span> <span class="toc-text">实验解法</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1-PC配置IP地址"><span class="toc-number">3.0.0.1.</span> <span class="toc-text">1. PC配置IP地址</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-SW1-和-SW2-上分别创建-VLAN-10-和-VLAN-20"><span class="toc-number">3.0.1.</span> <span class="toc-text">2. SW1 和 SW2 上分别创建 VLAN 10 和 VLAN 20</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-SW1-和-SW2-都把-g1-0-1-接口加入-VLAN-10，g1-0-2-接口加入-VLAN-20"><span class="toc-number">3.0.2.</span> <span class="toc-text">3. SW1 和 SW2 都把 g1&#x2F;0&#x2F;1 接口加入 VLAN 10，g1&#x2F;0&#x2F;2 接口加入 VLAN 20</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-SW1和SW2的g1-0-3接口都配置为trunk，允许VLAN-10和VLAN-20-通过"><span class="toc-number">3.0.3.</span> <span class="toc-text">4. SW1和SW2的g1&#x2F;0&#x2F;3接口都配置为trunk，允许VLAN 10和VLAN 20 通过</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-测试结果，如下所示，PC3可以ping通PC5，但无法ping通"><span class="toc-number">3.0.4.</span> <span class="toc-text">5. 测试结果，如下所示，PC3可以ping通PC5，但无法ping通</span></a></li></ol></li></ol></li></ol>
+      </li>
+    </ul>
+  </div>
+
+
+
+    <div id="comment" class="mdui-card mdui-p-a-2 mdui-m-b-5">
+      <div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+    clientID: '',
+    clientSecret: '',
+    repo: '',
+    owner: '',
+    admin: [''],
+    id:  md5(location.pathname) ,
+    distractionFreeMode: 'true',
+  });
+  gitalk.render('gitalk-container');
+</script>
+    </div>
+
+  </main>
+  <footer id="footer" class="mdui-text-center mdui-m-t-5 mdui-p-b-2 mdui-p-t-4 mdui-color-theme">
+  <div class="mdui-container">
+    <div class="mdui-row">
+      
+        <a href="http://www.beian.miit.gov.cn" rel="noopener" target="_blank"></a>
+      
+      <span>
+        &copy; 2020 
+        
+          <i style="color:#d9333f" class="fas fa-heart"></i>
+        
+        sanapri
+      </span>
+    </div>
+    <div class="mdui-row">
+      
+        <div class="mdui-col-xs-6 mdui-text-right">
+          <span>Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a></span>
+        </div>
+        <div class="mdui-col-xs-6 mdui-text-left">
+          <span>Theme: <a href="https://github.com/kb1000fx/Meadow" rel="noopener" target="_blank">Meadow</a></span>
+        </div>
+      
+    </div>
+    <div class="mdui-row">
+      
+        <div class="mdui-col-xs-6 mdui-text-right">
+          <span id="busuanzi_container_site_uv" style="display: none;"> <i class="mdui-icon material-icons">person</i>总访客量 <span id="busuanzi_value_site_uv"></span></span>
+        </div>
+        <div class="mdui-col-xs-6 mdui-text-left">
+          <span id="busuanzi_container_site_pv" style="display: none;"> <i class="mdui-icon material-icons">remove_red_eye</i>总访问量 <span id="busuanzi_value_site_pv"></span></span>
+        </div>
+      
+    </div>
+ </div>
+</footer>
+  
+  <button id="gotop" class="mdui-fab mdui-fab-fixed mdui-fab-hide mdui-ripple mdui-color-teal"><i class="mdui-icon material-icons">arrow_upward</i></button>
+  
+  
+
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@8.4.8/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({
+        startOnLoad: true,
+        theme: "default"
+    });</script>
+
+
+
+
+<script src="/js/mdui.min.js"></script>
+<script src="/js/meadow.js"></script>
+
+</body>
+</html >
