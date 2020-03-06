@@ -46,7 +46,7 @@
         
     </title>
 <meta name="generator" content="Hexo 4.2.0"></head>
-<body class="mdui-drawer-body-left mdui-appbar-with-toolbar mdui-theme-primary-white mdui-theme-accent-pink">
+<body class="mdui-drawer-body-left mdui-appbar-with-toolbar mdui-theme-primary-white mdui-theme-accent-white">
   
   <header class="mdui-appbar mdui-appbar-fixed">
   <div id="toolbar" class="mdui-toolbar mdui-color-theme">
@@ -399,5 +399,8 @@
 <script src="/js/mdui.min.js"></script>
 <script src="/js/meadow.js"></script>
 
+  {% if theme.canvas_nest %}
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+{% endif %}
 </body>
 </html >
