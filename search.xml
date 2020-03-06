@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>横竖撇点折</title>
+    <url>/2020/03/05/%E6%A8%AA%E7%AB%96%E6%92%87%E7%82%B9%E6%8A%98/</url>
+    <content><![CDATA[<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=1419023911&auto=1&height=66"></iframe>
+
+
+<a id="more"></a>
+
+
+<blockquote>
+<p>长牙四足<br>破门而开只见黔须半部<br>一人曾去目<br>孤心伫立待得日当正中<br>断角文几残画虎<br>凭一口难辨是非<br>唯有默语直书<br>盼众人皆得正言<br>俯耳听闻磬上风骨<br>双车一寸<br>一番偏言何以对敌正主<br>有暇人无玉<br>黄鹊非鸟唯有一人堪缚<br>对月相连<br>禾首枝相互<br>头十载无心日出<br>横平竖直点捺勾折皆变化<br>笔走龙蛇莫书春秋满潇洒<br>不见当初前人秉刀金竹上刻画<br>言缀成文虽千载仍生花<br>聊以数笔写过古今的繁华<br>出经入点顾自将历史传达<br>谜纵千年又有谁能回答<br>以何相系华夏<br>对端砚点朱砂</p>
+<p>下出良田<br>大刀一斫只见蚌失半边<br>人王横双眼<br>左立周家独看残双只雁<br>篱上编著半生缘<br>观沧海滴水无存<br>只剩半枚丝剪<br>禁不住康年无首<br>竹下扉开日出其先<br>笔木尽白<br>唯我而立一并横卧山前<br>长街竟无土<br>二十日下仅有十字成篇<br>笔下开言<br>草偶人不见<br>下舍履午中偷闲</p>
+<p>垂露悬针聚墨藏锋的章法<br>书同南北交手相傅漫天涯<br>何闻谁人流觞曲水兰亭中喧哗<br>语至今朝不知晓有几家</p>
+<p>且把苍毫书当年意气风发<br>看遍沧桑何惧岁月的冲刷<br>字字珠玑又有几人能尽画<br>成一书著一画<br>行万年于笔下</p>
+<p>我自作谜成词话<br>何问<br>何答<br>众看官知晓吗</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>音乐</category>
+      </categories>
+      <tags>
+        <tag>音乐</tag>
+        <tag>泠鸢yousa</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vlan和Trunk实验</title>
+    <url>/2020/03/05/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/</url>
+    <content><![CDATA[<hr>
+<h3 id="实验拓扑"><a href="#实验拓扑" class="headerlink" title="实验拓扑"></a>实验拓扑</h3><p><img src="/2020/03/05/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/tuopu.png" alt="实验拓扑图"></p>
+<hr>
+<h3 id="实验需求"><a href="#实验需求" class="headerlink" title="实验需求"></a>实验需求</h3><ol>
+<li>按图示为 PC 配置 IP 地址</li>
+<li>SW1 和 SW2 上分别创建 VLAN 10 和 VLAN 20，要求 PC3 和 PC5 属于 VLAN 10 ，PC4 和 PC6 属于 VLAN 20 </li>
+<li>SW1 和 SW2 相连的接口配置成 trunk 类型，允 许 VLAN 10 和 VLAN 20 通过</li>
+<li>测试效果，同一 VLAN 的 PC 可以互通，不同 VLAN 的 PC 无法互通<a id="more"></a>
+</li>
+</ol>
+<hr>
+<h3 id="实验解法"><a href="#实验解法" class="headerlink" title="实验解法"></a>实验解法</h3><h6 id="1-PC配置IP地址"><a href="#1-PC配置IP地址" class="headerlink" title="1. PC配置IP地址"></a>1. PC配置IP地址</h6><p><img src="/2020/03/05/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/PC3%E7%9A%84%E9%85%8D%E7%BD%AE.png" alt="PC3的配置；PC4,PC5,PC6类似"></p>
+<blockquote>
+<p>PC4,PC5,PC6的配置PC3类似</p>
+</blockquote>
+<h5 id="2-SW1-和-SW2-上分别创建-VLAN-10-和-VLAN-20"><a href="#2-SW1-和-SW2-上分别创建-VLAN-10-和-VLAN-20" class="headerlink" title="2. SW1 和 SW2 上分别创建 VLAN 10 和 VLAN 20"></a>2. SW1 和 SW2 上分别创建 VLAN 10 和 VLAN 20</h5><p> <em>步骤 1：在 SW1 上创建 VLAN 10 和 VLAN 20</em></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[sw1]vlan 10</span><br><span class="line">[sw1-vlan10]vlan 20 </span><br><span class="line">[sw1-vlan20]</span><br></pre></td></tr></table></figure>
+<p> <em>步骤2：在 SW2 上创建 VLAN 10 和 VLAN 20</em><br> <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[sw2]vlan 10 </span><br><span class="line">[sw2-vlan10]vlan 20 </span><br><span class="line">[sw2-vlan20]</span><br></pre></td></tr></table></figure></p>
+<h5 id="3-SW1-和-SW2-都把-g1-0-1-接口加入-VLAN-10，g1-0-2-接口加入-VLAN-20"><a href="#3-SW1-和-SW2-都把-g1-0-1-接口加入-VLAN-10，g1-0-2-接口加入-VLAN-20" class="headerlink" title="3. SW1 和 SW2 都把 g1/0/1 接口加入 VLAN 10，g1/0/2 接口加入 VLAN 20"></a>3. SW1 和 SW2 都把 g1/0/1 接口加入 VLAN 10，g1/0/2 接口加入 VLAN 20</h5><p>  <em>步骤1：在 SW1 上把 g1/0/1接口加入到VLAN 10， 把g1/0/2 接口加入到 VLAN 20</em></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[sw1]vlan 10 </span><br><span class="line">[sw1-vlan10]port g1&#x2F;0&#x2F;1 </span><br><span class="line">[sw1-vlan10]vlan 20 </span><br><span class="line">[sw1-vlan20]port g1&#x2F;0&#x2F;2</span><br></pre></td></tr></table></figure>
+<p> <em>步骤2：在 SW1 上把g1/0/1接口加入到VLAN 10， 把g1/0/2接口加入到VLAN 20</em><br> <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[sw2]vlan 10 </span><br><span class="line">[sw2-vlan10]port g1&#x2F;0&#x2F;1 </span><br><span class="line">[sw2-vlan10]vlan 20 </span><br><span class="line">[sw2-vlan20]port g1&#x2F;0&#x2F;2</span><br></pre></td></tr></table></figure></p>
+<h5 id="4-SW1和SW2的g1-0-3接口都配置为trunk，允许VLAN-10和VLAN-20-通过"><a href="#4-SW1和SW2的g1-0-3接口都配置为trunk，允许VLAN-10和VLAN-20-通过" class="headerlink" title="4. SW1和SW2的g1/0/3接口都配置为trunk，允许VLAN 10和VLAN 20 通过"></a>4. SW1和SW2的g1/0/3接口都配置为trunk，允许VLAN 10和VLAN 20 通过</h5><p> <em>步骤1: 在SW1上把g1/0/3接口配置为Trunk类型， 并允许VLAN 10 和VLAN 20通过</em><br> <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[sw1-vlan20]interface g1&#x2F;0&#x2F;3 </span><br><span class="line">[sw1-GigabitEthernet1&#x2F;0&#x2F;3]port link-type trunk </span><br><span class="line">[sw1-GigabitEthernet1&#x2F;0&#x2F;3]port trunk permit vlan 10 20</span><br></pre></td></tr></table></figure><br> <em>步骤2: 在SW2上把g1/0/3接口配置为Trunk类型， 并允许VLAN 10 和VLAN 20通过</em></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[sw2-vlan20]interface g1&#x2F;0&#x2F;3 </span><br><span class="line">[sw2-GigabitEthernet1&#x2F;0&#x2F;3]port link-type trunk </span><br><span class="line">[sw2-GigabitEthernet1&#x2F;0&#x2F;3]port trunk permit vlan 10 20</span><br></pre></td></tr></table></figure>
+<h5 id="5-测试结果，如下所示，PC3可以ping通PC5，但无法ping通"><a href="#5-测试结果，如下所示，PC3可以ping通PC5，但无法ping通" class="headerlink" title="5. 测试结果，如下所示，PC3可以ping通PC5，但无法ping通"></a>5. 测试结果，如下所示，PC3可以ping通PC5，但无法ping通</h5><p><em>步骤1: 在PC3上pingPC4， 发现不能ping通PC4和PC6</em></p>
+<p><em>步骤2: 在PC3上pingPC5， 发现可以ping通</em></p>
+<p><img src="/2020/03/05/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/ping5.png" alt="PC3可以ping通PC5"></p>
+<p><em>步骤3: 在PC3上pingPC6， 发现不能ping通</em></p>
+<p><img src="/2020/03/05/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/ping6.png" alt="PC3不能ping通PC6"></p>
+]]></content>
+      <categories>
+        <category>计算机网络</category>
+      </categories>
+      <tags>
+        <tag>H3C</tag>
+        <tag>路由交换</tag>
+      </tags>
+  </entry>
+</search>
