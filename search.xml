@@ -56,15 +56,16 @@
   <entry>
     <title>Vlan和Trunk实验</title>
     <url>/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/</url>
-    <content><![CDATA[<hr>
+    <content><![CDATA[<a id="more"></a>
+
+<hr>
 <h3 id="实验拓扑"><a href="#实验拓扑" class="headerlink" title="实验拓扑"></a>实验拓扑</h3><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/tuopu.png" alt="实验拓扑图"></p>
 <hr>
 <h3 id="实验需求"><a href="#实验需求" class="headerlink" title="实验需求"></a>实验需求</h3><ol>
 <li>按图示为 PC 配置 IP 地址</li>
 <li>SW1 和 SW2 上分别创建 VLAN 10 和 VLAN 20，要求 PC3 和 PC5 属于 VLAN 10 ，PC4 和 PC6 属于 VLAN 20 </li>
 <li>SW1 和 SW2 相连的接口配置成 trunk 类型，允 许 VLAN 10 和 VLAN 20 通过</li>
-<li>测试效果，同一 VLAN 的 PC 可以互通，不同 VLAN 的 PC 无法互通<a id="more"></a>
-</li>
+<li>测试效果，同一 VLAN 的 PC 可以互通，不同 VLAN 的 PC 无法互通</li>
 </ol>
 <hr>
 <h3 id="实验解法"><a href="#实验解法" class="headerlink" title="实验解法"></a>实验解法</h3><h6 id="1-PC配置IP地址"><a href="#1-PC配置IP地址" class="headerlink" title="1. PC配置IP地址"></a>1. PC配置IP地址</h6><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/PC3%E7%9A%84%E9%85%8D%E7%BD%AE.png" alt="PC3的配置；PC4,PC5,PC6类似"></p>
