@@ -5,6 +5,12 @@ body {
 }
 .mdui-card {
   background: rgba(255,255,255,0.1);
+  border-radius: 17px;
+}
+.mdui-card-media img {
+  display: block;
+  width: 100%;
+  margin-top: 5%;
 }
 /*Dark Mode*/
 .mdui-theme-layout-dark #footer {
@@ -230,7 +236,7 @@ pre .javascript .function {
   color: #c9c;
 }
 .post-readmore {
-  border: 2px solid #4caf50;
+  border: 2px solid #e9f1f6;
 }
 .post-readmore:hover {
   background-color: #4caf50;
