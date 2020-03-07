@@ -10,7 +10,6 @@ body {
 .mdui-card-media img {
   display: block;
   width: 100%;
-  margin-top: 50%;
 }
 /*Dark Mode*/
 .mdui-theme-layout-dark #footer {
