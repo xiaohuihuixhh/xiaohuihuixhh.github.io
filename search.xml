@@ -1,6 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>静态路由实验</title>
+    <url>/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1%E5%AE%9E%E9%AA%8C/</url>
+    <content><![CDATA[<hr>
+<a id="more"></a>
+
+<h3 id="实验拓扑"><a href="#实验拓扑" class="headerlink" title="实验拓扑"></a>实验拓扑</h3><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1%E5%AE%9E%E9%AA%8C/%E6%8B%93%E6%89%91.png" alt></p>
+<hr>
+<h3 id="实验需求"><a href="#实验需求" class="headerlink" title="实验需求"></a>实验需求</h3><ol>
+<li>按照图示配置IP地址 </li>
+<li>按照如下路径规划配置静态路由，实现连接PC的业务网段互通<br>i.  <code>192.168.1.0/24</code> 网段到达 <code>192.168.2.0/24</code> 网段经过R1，R2，R3<br>ii.  <code>192.168.2.0/24</code> 网段到达 <code>192.168.1.0/24</code> 网段经过R3，R4，R1<br>iii.  <code>192.168.1.0/24</code> 网段到达 <code>192.168.3.0/24</code> 网段经过R1，R4，R5<br>iv.  <code>192.168.2.0/24</code> 网段到达 <code>192.168.3.0/24</code> 网段经过R3，R4，R5<br>v.  <code>192.168.3.0/24</code> 网段到达 <code>192.168.1.0/24</code> 网段和 <code>192.168.2.0/24</code> 网段的路由来回一致<br>vi.  R5上不允许出现到达其他业务网段的明细路由<br>vii.  所有经过R4和R5的流量通过等价路由实现负载分担</li>
+</ol>
+<hr>
+<h3 id="实验解法"><a href="#实验解法" class="headerlink" title="实验解法"></a>实验解法</h3><h5 id="1-配置-IP-地址部分略"><a href="#1-配置-IP-地址部分略" class="headerlink" title="1. 配置 IP 地址部分略"></a>1. 配置 IP 地址部分略</h5><h5 id="2-按照需求配置静态路由，实现连接-PC-的业务网段互通"><a href="#2-按照需求配置静态路由，实现连接-PC-的业务网段互通" class="headerlink" title="2. 按照需求配置静态路由，实现连接 PC 的业务网段互通"></a>2. 按照需求配置静态路由，实现连接 PC 的业务网段互通</h5><blockquote>
+<p>分析：配置静态路由时， 首先要明确一点， 是要求全网互通， 还是只要求业务网段互通。 如果是 只要求业务网段互通的话， 就只需要配置到达业务网段的静态路由， 并不需要配置到达途径的互 联网段的静态路由 。<br>根据这个思路， 就可以得知， 只需要按照规划的路径， 使沿途每台路由器上具有到达目的业务网段的路由就可以了。<br>另外， 对于某些路由器， 某些业务网段是其直连网段， 路由器会自动产生相应的直连路由，并不需要再额外配置静态路由。</p>
+</blockquote>
+<p> <em>步骤 1：配置 <code>192.168.1.0/24</code> 网段到 <code>192.168.2.0</code> 网段的静态路由 分析：目的网段是 <code>192.168.2.0/24</code> 网段， 需要经过 R1， R2， R3， 在 R1 上需要配置静态路 由， 下一跳指向 R2 ， R2 上也需要配置静态路由， 下一跳指向 R3， R3 上会自动产生到达 <code>192.168.2.0/24</code> 网段的直连路由， 不需要额外配置</em></p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[R1]ip route‐static 192.168.2.0 24 10.2.2.2</span><br></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[R2]ip route‐static 192.168.2.0 24 10.3.3.3</span><br></pre></td></tr></table></figure>
+
+<p> <em>步骤 2：配置 <code>192.168.2.0/24</code> 网段到 <code>92.168.1.0</code> 网段的静态路由</em></p>
+<blockquote>
+<p>分析：目的网段是 <code>192.168.1.0/24</code> 网段， 需要经过 R3， R4， R1， 在 R3 上需要配置静态路 由， 下一跳指向 R4 ， R4 上也需要配置静态路由， 下一跳指向 R1， R1 上会自动产生到达 <code>192.168.1.0/24</code> 网段的直连路由， 不需要额外配置</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[R3]ip route‐static 192.168.1.0 24 10.4.4.4</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[R4]ip route‐static 192.168.1.0 24 10.1.1.1</span><br></pre></td></tr></table></figure>
+
+<p><em>步骤 3：配置 <code>192.168.1.0/24</code> 网段到 <code>192.168.3.0</code> 网段的静态路由</em></p>
+<blockquote>
+<p>分析：目的网段是 <code>192.168.3.0/24</code> 网段， 需要经过 R1， R4， R5， 在 R1 上需要配置静态路 由， 下一跳指向 R4 ， R4 上也需要配置静态路由， 下一跳指向 R5， 且 R4 到 R5 之间要求有等价路 由， R5 上会自动产生到达 <code>192.168.3.0/24</code> 网段的直连路由， 不需要额外配置。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[R1]ip route‐static 192.168.3.0 24 10.1.1.4</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[R4]ip route‐static 192.168.3.0 24 10.5.5.5 </span><br><span class="line">[R4]ip route‐static 192.168.3.0 24 10.6.6.5</span><br></pre></td></tr></table></figure>
+<p><em>步骤 4：配置 <code>192.168.2.0/24</code> 网段到 <code>192.168.3.0</code> 网段的静态路由</em></p>
+<blockquote>
+<p>分析：目的网段是 <code>192.168.3.0/24</code> 网段， 需要经过 R3， R4， R5， 在 R3 上需要配置静态路 由， 下一跳指向 R4 ， R4 在上一步已经配置过了， 无需再次配置， R5 上会自动产生到达 <code>192.168.3.0/24</code> 网段的直连路由， 不需要额外配置。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[R3]ip route‐static 192.168.3.0 24 10.4.4</span><br></pre></td></tr></table></figure>
+
+<p><em>步骤 5：配置 <code>192.168.3.0/24</code> 网段到 <code>192.168.1.0</code> 网段的静态路由</em></p>
+<blockquote>
+<p>分析：目的网段是 <code>192.168.1.0/24</code> 网段， 要求来回路径一致， 就是要经过 R5， R4， R1， 在 R5 上需要配置静态路由， 下一跳指向 R4 ， 但又不允许出现明细路由， 那么只能通过默认路由来 实现， 而且 R5 到 R4 上需求有等价路由， R4 在步骤 2 已经配置过了到达 <code>192.168.1.0/24</code> 网段 的路由， 不需要再次配置， R1 上会自动产生到达 <code>192.168.1.0/24</code>网段的直连路由， 也不需要 额外配置。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[R5]ip route‐static 0.0.0.0 0 10.5.5.4 </span><br><span class="line">[R5]ip route‐static 0.0.0.0 0 10.6.6.4</span><br></pre></td></tr></table></figure>
+
+<p><em>步骤 6：配置 <code>192.168.3.0/24</code> 网段到 <code>192.168.2.0</code> 网段的静态路由</em></p>
+<blockquote>
+<p>分析：目的网段是 <code>192.168.2.0/24</code> 网段， 要求来回路径一致， 就是要经过 R5， R4， R3， R5 在上一步已经配置过了默认路由， 不需要再次配置， R4 需要配置静态路由， 下一跳指向 R3， R3 上会自动产生到达 <code>192.168.3.0/24</code> 网段的直连路由， 也不需要额外配置。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[R4]ip route‐static 192.168.2.0 24 10.4.4.3</span><br></pre></td></tr></table></figure>
+
+<h3 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h3><ol>
+<li><p>PC6 ping PC7<br><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1%E5%AE%9E%E9%AA%8C/1.png" alt></p>
+</li>
+<li><p>PC8 ping PC6<br><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1%E5%AE%9E%E9%AA%8C/2.png" alt></p>
+</li>
+<li><p>PC8 ping PC7<br><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1%E5%AE%9E%E9%AA%8C/3.png" alt></p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>计算机网络</category>
+      </categories>
+      <tags>
+        <tag>H3C</tag>
+        <tag>静态路由</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>三层交换机实验</title>
+    <url>/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E4%B8%89%E5%B1%82%E4%BA%A4%E6%8D%A2%E6%9C%BA%E5%AE%9E%E9%AA%8C/</url>
+    <content><![CDATA[<hr>
+<a id="more"></a>
+
+<h3 id="实验拓扑"><a href="#实验拓扑" class="headerlink" title="实验拓扑"></a>实验拓扑</h3><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E4%B8%89%E5%B1%82%E4%BA%A4%E6%8D%A2%E6%9C%BA%E5%AE%9E%E9%AA%8C/%E6%8B%93%E6%89%91.png" alt></p>
+<hr>
+<h3 id="实验需求"><a href="#实验需求" class="headerlink" title="实验需求"></a>实验需求</h3><ol>
+<li>按照图示为 PC2 和 PC3 配置 IP 地址和网关 </li>
+<li>PC2 属于 Vlan10，PC3 属于 Vlan20，在三层交换机上配置 Vlanif 三层接口实现 Vlan10 和 Vlan20 三 层互</li>
+<li>PC2 和 PC3 可以互通</li>
+</ol>
+<hr>
+<h3 id="实验解法"><a href="#实验解法" class="headerlink" title="实验解法"></a>实验解法</h3><h5 id="1-PC配置IP地址部分省略"><a href="#1-PC配置IP地址部分省略" class="headerlink" title="1.PC配置IP地址部分省略"></a>1.PC配置IP地址部分省略</h5><h5 id="2-PC2-属于-Vlan10，PC3-属于-Vlan20，在三层交换机上配置-Vlanif-三层接口实现-Vlan10-和-Vlan20-三层互通"><a href="#2-PC2-属于-Vlan10，PC3-属于-Vlan20，在三层交换机上配置-Vlanif-三层接口实现-Vlan10-和-Vlan20-三层互通" class="headerlink" title="2.PC2 属于 Vlan10，PC3 属于 Vlan20，在三层交换机上配置 Vlanif 三层接口实现 Vlan10 和 Vlan20 三层互通"></a>2.PC2 属于 Vlan10，PC3 属于 Vlan20，在三层交换机上配置 Vlanif 三层接口实现 Vlan10 和 Vlan20 三层互通</h5><blockquote>
+<p>分析：在三层交换机上实现 Vlan 间的路由互通， 只需要对每个 Vlan 开启 Vlanif 三层接口， 并配 置对应网段的网关地址就可以了</p>
+</blockquote>
+<p><em>步骤 1：在 SW1 上创建 Vlan10 和 Vlan20， 并把 g1/0/1 接口加入 Vlan10， 把 g1/0/2 接口加入 Vlan20</em></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[SW1]vlan 10 </span><br><span class="line">[SW1‐vlan10]port g1&#x2F;0&#x2F;1 </span><br><span class="line">[SW1‐vlan10]vlan 20 </span><br><span class="line">[SW1‐vlan20]port g1&#x2F;0&#x2F;2</span><br></pre></td></tr></table></figure>
+<p><em>步骤 2：在 SW1 上对 Vlan10 和 Vlan20 开启 Vlanif 接口， 并配置 Vlanif10 接口 IP 地址为 Vlan10 的 网关地址 <code>192.168.1.254/24</code> ， 配置 Vlanif20 接口 IP 地址为 Vlan20 的网关地址 <code>192.168.2.254/24</code></em></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[SW1]interface Vlan‐interface 10 </span><br><span class="line">[SW1‐Vlan‐interface10]ip address 192.168.1.254 24</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[SW1]interface Vlan‐interface 20 </span><br><span class="line">[SW1‐Vlan‐interface20]ip address 192.168.2.254 24</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>分析：配置结束后， 在 SW1 上查看路由表， 会发现已经产生了到达<code>192.168.1.0/24</code> 网段和 <code>192.168.2.0/24</code>网段的直连路由， 出接口分别指向各自 Vlanif 接口， 证明 SW1 已经可以对 Vlan10 和 Vlan20 间的数据进行三层转发了</p>
+</blockquote>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E4%B8%89%E5%B1%82%E4%BA%A4%E6%8D%A2%E6%9C%BA%E5%AE%9E%E9%AA%8C/1.png" alt></p>
+<h5 id="3-测试在-PC3-上-Ping-PC4-，可以-Ping-通-PC4"><a href="#3-测试在-PC3-上-Ping-PC4-，可以-Ping-通-PC4" class="headerlink" title="3. 测试在 PC3 上 Ping PC4 ，可以 Ping 通 PC4"></a>3. 测试在 PC3 上 Ping PC4 ，可以 Ping 通 PC4</h5><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E4%B8%89%E5%B1%82%E4%BA%A4%E6%8D%A2%E6%9C%BA%E5%AE%9E%E9%AA%8C/2.png" alt></p>
+]]></content>
+      <categories>
+        <category>计算机网络</category>
+      </categories>
+      <tags>
+        <tag>H3C</tag>
+        <tag>三层交换机</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>折纸信笺</title>
     <url>/%E9%9A%8F%E7%AC%94/%E6%8A%98%E7%BA%B8%E4%BF%A1%E7%AC%BA/</url>
     <content><![CDATA[<p>&nbsp;</p>
@@ -70,19 +177,19 @@
 <li>测试效果，同一 VLAN 的 PC 可以互通，不同 VLAN 的 PC 无法互通</li>
 </ol>
 <hr>
-<h3 id="实验解法"><a href="#实验解法" class="headerlink" title="实验解法"></a>实验解法</h3><h6 id="1-PC配置IP地址"><a href="#1-PC配置IP地址" class="headerlink" title="1. PC配置IP地址"></a>1. PC配置IP地址</h6><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/PC3%E7%9A%84%E9%85%8D%E7%BD%AE.png" alt="PC3的配置；PC4,PC5,PC6类似"></p>
+<h3 id="实验解法"><a href="#实验解法" class="headerlink" title="实验解法"></a>实验解法</h3><h5 id="1-PC配置IP地址"><a href="#1-PC配置IP地址" class="headerlink" title="1. PC配置IP地址"></a>1. PC配置IP地址</h5><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/PC3%E7%9A%84%E9%85%8D%E7%BD%AE.png" alt="PC3的配置；PC4,PC5,PC6类似"></p>
 <blockquote>
 <p>PC4,PC5,PC6的配置PC3类似</p>
 </blockquote>
 <h5 id="2-SW1-和-SW2-上分别创建-VLAN-10-和-VLAN-20"><a href="#2-SW1-和-SW2-上分别创建-VLAN-10-和-VLAN-20" class="headerlink" title="2. SW1 和 SW2 上分别创建 VLAN 10 和 VLAN 20"></a>2. SW1 和 SW2 上分别创建 VLAN 10 和 VLAN 20</h5><p> <em>步骤 1：在 SW1 上创建 VLAN 10 和 VLAN 20</em></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[sw1]vlan 10</span><br><span class="line">[sw1-vlan10]vlan 20 </span><br><span class="line">[sw1-vlan20]</span><br></pre></td></tr></table></figure>
 <p> <em>步骤2：在 SW2 上创建 VLAN 10 和 VLAN 20</em><br> <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[sw2]vlan 10 </span><br><span class="line">[sw2-vlan10]vlan 20 </span><br><span class="line">[sw2-vlan20]</span><br></pre></td></tr></table></figure></p>
-<h5 id="3-SW1-和-SW2-都把-g1-0-1-接口加入-VLAN-10，g1-0-2-接口加入-VLAN-20"><a href="#3-SW1-和-SW2-都把-g1-0-1-接口加入-VLAN-10，g1-0-2-接口加入-VLAN-20" class="headerlink" title="3. SW1 和 SW2 都把 g1/0/1 接口加入 VLAN 10，g1/0/2 接口加入 VLAN 20"></a>3. SW1 和 SW2 都把 g1/0/1 接口加入 VLAN 10，g1/0/2 接口加入 VLAN 20</h5><p>  <em>步骤1：在 SW1 上把 g1/0/1接口加入到VLAN 10， 把g1/0/2 接口加入到 VLAN 20</em></p>
+<h4 id="3-SW1-和-SW2-都把-g1-0-1-接口加入-VLAN-10，g1-0-2-接口加入-VLAN-20"><a href="#3-SW1-和-SW2-都把-g1-0-1-接口加入-VLAN-10，g1-0-2-接口加入-VLAN-20" class="headerlink" title="3. SW1 和 SW2 都把 g1/0/1 接口加入 VLAN 10，g1/0/2 接口加入 VLAN 20"></a>3. SW1 和 SW2 都把 g1/0/1 接口加入 VLAN 10，g1/0/2 接口加入 VLAN 20</h4><p>  <em>步骤1：在 SW1 上把 g1/0/1接口加入到VLAN 10， 把g1/0/2 接口加入到 VLAN 20</em></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[sw1]vlan 10 </span><br><span class="line">[sw1-vlan10]port g1&#x2F;0&#x2F;1 </span><br><span class="line">[sw1-vlan10]vlan 20 </span><br><span class="line">[sw1-vlan20]port g1&#x2F;0&#x2F;2</span><br></pre></td></tr></table></figure>
 <p> <em>步骤2：在 SW1 上把g1/0/1接口加入到VLAN 10， 把g1/0/2接口加入到VLAN 20</em><br> <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[sw2]vlan 10 </span><br><span class="line">[sw2-vlan10]port g1&#x2F;0&#x2F;1 </span><br><span class="line">[sw2-vlan10]vlan 20 </span><br><span class="line">[sw2-vlan20]port g1&#x2F;0&#x2F;2</span><br></pre></td></tr></table></figure></p>
-<h5 id="4-SW1和SW2的g1-0-3接口都配置为trunk，允许VLAN-10和VLAN-20-通过"><a href="#4-SW1和SW2的g1-0-3接口都配置为trunk，允许VLAN-10和VLAN-20-通过" class="headerlink" title="4. SW1和SW2的g1/0/3接口都配置为trunk，允许VLAN 10和VLAN 20 通过"></a>4. SW1和SW2的g1/0/3接口都配置为trunk，允许VLAN 10和VLAN 20 通过</h5><p> <em>步骤1: 在SW1上把g1/0/3接口配置为Trunk类型， 并允许VLAN 10 和VLAN 20通过</em><br> <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[sw1-vlan20]interface g1&#x2F;0&#x2F;3 </span><br><span class="line">[sw1-GigabitEthernet1&#x2F;0&#x2F;3]port link-type trunk </span><br><span class="line">[sw1-GigabitEthernet1&#x2F;0&#x2F;3]port trunk permit vlan 10 20</span><br></pre></td></tr></table></figure><br> <em>步骤2: 在SW2上把g1/0/3接口配置为Trunk类型， 并允许VLAN 10 和VLAN 20通过</em></p>
+<h4 id="4-SW1和SW2的g1-0-3接口都配置为trunk，允许VLAN-10和VLAN-20-通过"><a href="#4-SW1和SW2的g1-0-3接口都配置为trunk，允许VLAN-10和VLAN-20-通过" class="headerlink" title="4. SW1和SW2的g1/0/3接口都配置为trunk，允许VLAN 10和VLAN 20 通过"></a>4. SW1和SW2的g1/0/3接口都配置为trunk，允许VLAN 10和VLAN 20 通过</h4><p> <em>步骤1: 在SW1上把g1/0/3接口配置为Trunk类型， 并允许VLAN 10 和VLAN 20通过</em><br> <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[sw1-vlan20]interface g1&#x2F;0&#x2F;3 </span><br><span class="line">[sw1-GigabitEthernet1&#x2F;0&#x2F;3]port link-type trunk </span><br><span class="line">[sw1-GigabitEthernet1&#x2F;0&#x2F;3]port trunk permit vlan 10 20</span><br></pre></td></tr></table></figure><br> <em>步骤2: 在SW2上把g1/0/3接口配置为Trunk类型， 并允许VLAN 10 和VLAN 20通过</em></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[sw2-vlan20]interface g1&#x2F;0&#x2F;3 </span><br><span class="line">[sw2-GigabitEthernet1&#x2F;0&#x2F;3]port link-type trunk </span><br><span class="line">[sw2-GigabitEthernet1&#x2F;0&#x2F;3]port trunk permit vlan 10 20</span><br></pre></td></tr></table></figure>
-<h5 id="5-测试结果，如下所示，PC3可以ping通PC5，但无法ping通"><a href="#5-测试结果，如下所示，PC3可以ping通PC5，但无法ping通" class="headerlink" title="5. 测试结果，如下所示，PC3可以ping通PC5，但无法ping通"></a>5. 测试结果，如下所示，PC3可以ping通PC5，但无法ping通</h5><p><em>步骤1: 在PC3上pingPC4， 发现不能ping通PC4和PC6</em></p>
+<h4 id="5-测试结果，如下所示，PC3可以ping通PC5，但无法ping通"><a href="#5-测试结果，如下所示，PC3可以ping通PC5，但无法ping通" class="headerlink" title="5. 测试结果，如下所示，PC3可以ping通PC5，但无法ping通"></a>5. 测试结果，如下所示，PC3可以ping通PC5，但无法ping通</h4><p><em>步骤1: 在PC3上pingPC4， 发现不能ping通PC4和PC6</em></p>
 <p><em>步骤2: 在PC3上pingPC5， 发现可以ping通</em></p>
 <p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Vlan%E5%92%8CTrunk%E5%AE%9E%E9%AA%8C/ping5.png" alt="PC3可以ping通PC5"></p>
 <p><em>步骤3: 在PC3上pingPC6， 发现不能ping通</em></p>
