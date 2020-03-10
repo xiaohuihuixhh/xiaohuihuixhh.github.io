@@ -7,6 +7,9 @@
 <a id="more"></a>
 
 <h3 id="实验拓扑"><a href="#实验拓扑" class="headerlink" title="实验拓扑"></a>实验拓扑</h3><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IRF%E3%80%81%E8%81%9A%E5%90%88%E5%AE%9E%E9%AA%8C/tp.png" alt></p>
+<blockquote>
+<p>图中vlan 20改为vlan 10</p>
+</blockquote>
 <hr>
 <h3 id="实验需求"><a href="#实验需求" class="headerlink" title="实验需求"></a>实验需求</h3><ol>
 <li>SW1 和 SW2 配置 IRF，堆叠为一台交换机 </li>
