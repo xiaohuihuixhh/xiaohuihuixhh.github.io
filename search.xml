@@ -1,6 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>IRF、聚合实验</title>
+    <url>/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IRF%E3%80%81%E8%81%9A%E5%90%88%E5%AE%9E%E9%AA%8C/</url>
+    <content><![CDATA[<hr>
+<a id="more"></a>
+
+<h3 id="实验拓扑"><a href="#实验拓扑" class="headerlink" title="实验拓扑"></a>实验拓扑</h3><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IRF%E3%80%81%E8%81%9A%E5%90%88%E5%AE%9E%E9%AA%8C/tp.png" alt></p>
+<hr>
+<h3 id="实验需求"><a href="#实验需求" class="headerlink" title="实验需求"></a>实验需求</h3><ol>
+<li>SW1 和 SW2 配置 IRF，堆叠为一台交换机 </li>
+<li>SW3 和 SW4 分别与 IRF 设备配置链路聚合 </li>
+<li>SW3 和 SW4 上分别把连接 PC 的接口加入 VLAN 10 </li>
+<li>PC5 和 PC6 按图所示配置 IP 地址，要求 PC5 和 PC6 能够ping通</li>
+</ol>
+<hr>
+<h3 id="实验解法"><a href="#实验解法" class="headerlink" title="实验解法"></a>实验解法</h3><h5 id="1-SW1-和-SW2-配置-IRF-，堆叠为一台交换机"><a href="#1-SW1-和-SW2-配置-IRF-，堆叠为一台交换机" class="headerlink" title="1. SW1 和 SW2 配置 IRF ，堆叠为一台交换机"></a>1. SW1 和 SW2 配置 IRF ，堆叠为一台交换机</h5><p><em>步骤1: 修改SW2的设配ID为2， 保存配置， 并重启生效</em></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[sw2]irf member 1 renumber 2 </span><br><span class="line">[sw2]save </span><br><span class="line">[sw2]quit </span><br><span class="line">&lt;sw2&gt;reboot</span><br></pre></td></tr></table></figure>
+<p><em>步骤2: 手动关闭SW1的 f1/0/53 和 f1/0/54 口</em></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[sw1]interface f1&#x2F;0&#x2F;53 </span><br><span class="line">[sw1-FortyGigE1&#x2F;0&#x2F;53]shutdown </span><br><span class="line">[sw1]interface f1&#x2F;0&#x2F;54 </span><br><span class="line">[sw1-FortyGigE1&#x2F;0&#x2F;54]shutdown</span><br></pre></td></tr></table></figure>
+
+<p><em>步骤3：在SW1上创建IRF-Port1/1 堆叠口， 并把f1/0/53 和 f1/0/54 口加入堆叠口</em></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[sw1]irf-port 1&#x2F;1 </span><br><span class="line">[sw1-irf-port1&#x2F;1]port group interface f1&#x2F;0&#x2F;53 </span><br><span class="line">[sw1-irf-port1&#x2F;1]port group interface f1&#x2F;0&#x2F;54</span><br></pre></td></tr></table></figure>
+
+<p><em>步骤4：在 SW1 上手动开启 f1/0/53 和 f1/0/54 口</em></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[sw1]interface f1&#x2F;0&#x2F;53 </span><br><span class="line">[sw1-FortyGigE1&#x2F;0&#x2F;53]undo shutdown </span><br><span class="line">[sw1]interface f1&#x2F;0&#x2F;54 </span><br><span class="line">[sw1-FortyGigE1&#x2F;0&#x2F;54]undo shutdown</span><br></pre></td></tr></table></figure>
+
+<p><em>步骤5：在SW1上保存配置， 并激活IRF配置</em></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[sw1]save </span><br><span class="line">[sw1]irf-port-configuration active</span><br></pre></td></tr></table></figure>
+<p><em>步骤6：在SW2重启完成后， 手动关闭 f2/0/53 和 f2/0/54口</em></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[sw2]interface f2&#x2F;0&#x2F;53 </span><br><span class="line">[sw2-FortyGigE2&#x2F;0&#x2F;53]shutdown </span><br><span class="line">[sw2-FortyGigE2&#x2F;0&#x2F;53]interface f2&#x2F;0&#x2F;54 </span><br><span class="line">[sw2-FortyGigE2&#x2F;0&#x2F;54]shutdown</span><br></pre></td></tr></table></figure>
+
+<p><em>步骤7：在SW2上创建IRF-Port2/2堆叠口， 并把f2/0/53 和 f2/0/54 口加入到堆叠口</em></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[sw2]irf-port 2&#x2F;2 </span><br><span class="line">[sw2-irf-port2&#x2F;2]port group interface f2&#x2F;0&#x2F;53 </span><br><span class="line">[sw2-irf-port2&#x2F;2]port group interface f2&#x2F;0&#x2F;54</span><br></pre></td></tr></table></figure>
+<p><em>步骤8：在SW2上手动开启 F2/0/53 和 F2/0/54</em></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[sw2]interface f2&#x2F;0&#x2F;53 </span><br><span class="line">[sw2-FortyGigE2&#x2F;0&#x2F;53]undo shutdown </span><br><span class="line">[sw2-FortyGigE2&#x2F;0&#x2F;53]interface f2&#x2F;0&#x2F;54 </span><br><span class="line">[sw2-FortyGigE2&#x2F;0&#x2F;54]undo shutdown</span><br></pre></td></tr></table></figure>
+<p><em>步骤9：在 SW2 上保存配置， 并激活IRF 配置。 然后SW2 会自动重启， 重启完成后 SW2 自动成为Slave 设备， 并与SW1 配置同步， 形成堆叠</em></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[s2]save </span><br><span class="line">[sw2]irf-port-configuration active</span><br></pre></td></tr></table></figure>
+<p><em>步骤10：在 SW1 上修改堆叠设备名称为 IRF-SW</em></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[sw1]sysname IRF-SW</span><br></pre></td></tr></table></figure>
+<h5 id="2-SW3-和-SW4-分别与-IRF-设备配置链路聚合"><a href="#2-SW3-和-SW4-分别与-IRF-设备配置链路聚合" class="headerlink" title="2. SW3 和 SW4 分别与 IRF 设备配置链路聚合"></a>2. SW3 和 SW4 分别与 IRF 设备配置链路聚合</h5><p><em>步骤1：在SW3 上创建 1 号聚合组， 并把g1/0/1 和 g1/0/2 加入聚合组</em></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[sw3]interface Bridge-Aggregation 1 </span><br><span class="line">[sw3-Bridge-Aggregation1]interface g1&#x2F;0&#x2F;1 </span><br><span class="line">[sw3-GigabitEthernet1&#x2F;0&#x2F;1]port link-aggregation group 1 </span><br><span class="line">[sw3-GigabitEthernet1&#x2F;0&#x2F;1]interface g1&#x2F;0&#x2F;2 </span><br><span class="line">[sw3-GigabitEthernet1&#x2F;0&#x2F;2]port link-aggregation group 1</span><br></pre></td></tr></table></figure>
+
+<p><em>步骤2：在SW4上创建 1 号聚合组， 并把g1/0/1 和g1/0/2加入聚合组</em></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[sw4]interface Bridge-Aggregation 1 </span><br><span class="line">[sw4-Bridge-Aggregation1]interface g1&#x2F;0&#x2F;1 </span><br><span class="line">[sw4-GigabitEthernet1&#x2F;0&#x2F;1]port link-aggregation group 1</span><br><span class="line">[sw4-GigabitEthernet1&#x2F;0&#x2F;1]interface g1&#x2F;0&#x2F;2 </span><br><span class="line">[sw4-GigabitEthernet1&#x2F;0&#x2F;2]port link-aggregation group 1</span><br></pre></td></tr></table></figure>
+<p><em>步骤3：在IRF-SW上创建 1 号聚合组， 与SW3建立链路聚合， 创建 2 号堆叠组， 与SW4建立链路聚合</em></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[IRF-SW]interface Bridge-Aggregation 1 </span><br><span class="line">[IRF-SW-Bridge-Aggregation1]interface g1&#x2F;0&#x2F;3 </span><br><span class="line">[IRF-SW-GigabitEthernet1&#x2F;0&#x2F;3]port link-aggregation group 1 </span><br><span class="line">[IRF-SW-GigabitEthernet1&#x2F;0&#x2F;3]interface g2&#x2F;0&#x2F;3 </span><br><span class="line">[IRF-SW-GigabitEthernet2&#x2F;0&#x2F;3]interface Bridge-Aggregation 2 </span><br><span class="line">[IRF-SW-Bridge-Aggregation2]interface g1&#x2F;0&#x2F;4 </span><br><span class="line">[IRF-SW-GigabitEthernet1&#x2F;0&#x2F;4]port link-aggregation group 2 </span><br><span class="line">[IRF-SW-GigabitEthernet1&#x2F;0&#x2F;4]interface g2&#x2F;0&#x2F;4 </span><br><span class="line">[IRF-SW-GigabitEthernet2&#x2F;0&#x2F;4]port link-aggregation group 2</span><br></pre></td></tr></table></figure>
+<h5 id="3-SW3和SW4上分别把连接PC的接口加入VLAN-10"><a href="#3-SW3和SW4上分别把连接PC的接口加入VLAN-10" class="headerlink" title="3. SW3和SW4上分别把连接PC的接口加入VLAN 10"></a>3. SW3和SW4上分别把连接PC的接口加入VLAN 10</h5><p><em>步骤1：在SW3上把g1/0/3加入VLAN 10， 把聚合口配置为Trunk， 放行VLAN 10</em></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[sw3]vlan 10 [sw3-vlan10]port g1&#x2F;0&#x2F;3 </span><br><span class="line">[sw3-vlan10]interface Bridge-Aggregation 1 </span><br><span class="line">[sw3-Bridge-Aggregation1]port link-t trunk </span><br><span class="line">[sw3-Bridge-Aggregation1]port trunk permit vlan 10</span><br></pre></td></tr></table></figure>
+
+<p><em>步骤2：在SW4上把g1/0/3加入VLAN 10， 把聚合口配置为Trunk， 放行VLAN 10</em></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[sw4]vlan 10 [sw4-vlan10]port g1&#x2F;0&#x2F;3 </span><br><span class="line">[sw4-vlan10]interface Bridge-Aggregation 1 </span><br><span class="line">[sw4-Bridge-Aggregation1]port link-t trunk </span><br><span class="line">[sw4-Bridge-Aggregation1]port trunk permit vlan 10</span><br></pre></td></tr></table></figure>
+
+<p><em>步骤3：在IRF-SW上创建VLAN 10， 并把2个聚合口都配置为Trunk， 放行VLAN 10</em></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[IRF-SW]vlan 10 </span><br><span class="line">[IRF-SW-vlan10]interface Bridge-Aggregation 1 </span><br><span class="line">[IRF-SW-Bridge-Aggregation1]port link-t trunk </span><br><span class="line">[IRF-SW-Bridge-Aggregation1]port trunk permit vlan 10 </span><br><span class="line">[IRF-SW-Bridge-Aggregation1]interface Bridge-Aggregation 2</span><br><span class="line">[IRF-SW-Bridge-Aggregation2]port link-t trunk </span><br><span class="line">[IRF-SW-Bridge-Aggregation2]port trunk permit vlan 10</span><br></pre></td></tr></table></figure>
+<h6 id="4-PC-5所示配置和PC6按图所示配置IP地址，要求PC5和PC6能够Ping通"><a href="#4-PC-5所示配置和PC6按图所示配置IP地址，要求PC5和PC6能够Ping通" class="headerlink" title="4. PC 5所示配置和PC6按图所示配置IP地址，要求PC5和PC6能够Ping通"></a>4. PC 5所示配置和PC6按图所示配置IP地址，要求PC5和PC6能够Ping通</h6><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IRF%E3%80%81%E8%81%9A%E5%90%88%E5%AE%9E%E9%AA%8C/1.png" alt></p>
+]]></content>
+      <categories>
+        <category>计算机网络</category>
+      </categories>
+      <tags>
+        <tag>H3C</tag>
+        <tag>IRF</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>静态路由实验</title>
     <url>/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1%E5%AE%9E%E9%AA%8C/</url>
     <content><![CDATA[<hr>
@@ -159,8 +223,8 @@
         <category>音乐</category>
       </categories>
       <tags>
-        <tag>泠鸢yousa</tag>
         <tag>音乐</tag>
+        <tag>泠鸢yousa</tag>
       </tags>
   </entry>
   <entry>
