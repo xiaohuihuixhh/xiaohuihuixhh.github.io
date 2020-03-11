@@ -1,6 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>OSPF实验</title>
+    <url>/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/OSPF%E5%AE%9E%E9%AA%8C/</url>
+    <content><![CDATA[<hr>
+<a id="more"></a>
+
+<h3 id="实验拓扑"><a href="#实验拓扑" class="headerlink" title="实验拓扑"></a>实验拓扑</h3><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/OSPF%E5%AE%9E%E9%AA%8C/tp.png" alt></p>
+<hr>
+<h3 id="实验需求"><a href="#实验需求" class="headerlink" title="实验需求"></a>实验需求</h3><ol>
+<li>按照图示配置IP地址 </li>
+<li>按照图示分区域配置OSPF，实现全网互通 </li>
+<li>为了路由结构稳定，要求路由器使用环回口作为Router‐id，ABR的环回口宣告进骨干区域</li>
+</ol>
+<hr>
+<h3 id="实验解法"><a href="#实验解法" class="headerlink" title="实验解法"></a>实验解法</h3><h5 id="1-配置IP地址部分略"><a href="#1-配置IP地址部分略" class="headerlink" title="1. 配置IP地址部分略"></a>1. 配置IP地址部分略</h5><h5 id="2-按照图示分区域配置OSPF，实现全网互通"><a href="#2-按照图示分区域配置OSPF，实现全网互通" class="headerlink" title="2. 按照图示分区域配置OSPF，实现全网互通"></a>2. 按照图示分区域配置OSPF，实现全网互通</h5><blockquote>
+<p>分析：实现全网互通，意味着每台路由器都要宣告本地的所有直连网段，包括环回口所在的网<br>段。要求ABR的环回口宣告进骨干区域，即区域0。同时，每台路由器手动配置各自的环回口的IP 地址作为Router‐id</p>
+</blockquote>
+<p><em>步骤1：在路由器上分别配置OSPF，按区域宣告所有直连网段和环回口</em></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[r1]ospf 1 router‐id 1.1.1.1 </span><br><span class="line">[r1‐ospf‐1]area 1 </span><br><span class="line">[r1‐ospf‐1‐area‐0.0.0.1]network 1.1.1.1 0.0.0.0 </span><br><span class="line">[r1‐ospf‐1‐area‐0.0.0.1]network 100.1.1.0 0.0.0.255</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[r2]ospf 1 router‐id 2.2.2.2 </span><br><span class="line">[r2‐ospf‐1]area 1 </span><br><span class="line">[r2‐ospf‐1‐area‐0.0.0.1]network 100.1.1.0 0.0.0.255 </span><br><span class="line">[r2‐ospf‐1‐area‐0.0.0.1]area 0 </span><br><span class="line">[r2‐ospf‐1‐area‐0.0.0.0]network 2.2.2.2 0.0.0.0 </span><br><span class="line">[r2‐ospf‐1‐area‐0.0.0.0]network 100.2.2.0 0.0.0.255</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[r3]ospf 1 router‐id 3.3.3.3 </span><br><span class="line">[r3‐ospf‐1]area 0 </span><br><span class="line">[r3‐ospf‐1‐area‐0.0.0.0]network 3.3.3.3 0.0.0.0 </span><br><span class="line">[r3‐ospf‐1‐area‐0.0.0.0]network 100.2.2.0 0.0.0.255 </span><br><span class="line">[r3‐ospf‐1‐area‐0.0.0.0]network 100.3.3.0 0.0.0.255</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[r4]ospf 1 router‐id 4.4.4.4 </span><br><span class="line">[r4‐ospf‐1]area 0 </span><br><span class="line">[r4‐ospf‐1‐area‐0.0.0.0]network 4.4.4.4 0.0.0.0 </span><br><span class="line">[r4‐ospf‐1‐area‐0.0.0.0]network 100.3.3.0 0.0.0.255 </span><br><span class="line">[r4‐ospf‐1‐area‐0.0.0.0]area 2 </span><br><span class="line">[r4‐ospf‐1‐area‐0.0.0.2]network 100.4.4.0 0.0.0.255</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[r5]ospf 1 router‐id 5.5.5.5 </span><br><span class="line">[r5‐ospf‐1]area 2 </span><br><span class="line">[r5‐ospf‐1‐area‐0.0.0.2]network 5.5.5.5 0.0.0.0 </span><br><span class="line">[r5‐ospf‐1‐area‐0.0.0.2]network 100.4.4.0 0.0.0.255</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-检查是否全网互通"><a href="#3-检查是否全网互通" class="headerlink" title="3. 检查是否全网互通"></a>3. 检查是否全网互通</h5><blockquote>
+<p>分析：检查OSPF是否全网互通，一个是检查邻居关系表，看邻居关系是否正常；另一个是检查路<br>由表，看是否学习到全网路由。这里展示R2和R4的检查结果。</p>
+</blockquote>
+<p><em>步骤1：检查R2和R4的邻居关系表</em></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/OSPF%E5%AE%9E%E9%AA%8C/1.png" alt></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/OSPF%E5%AE%9E%E9%AA%8C/2.png" alt></p>
+<blockquote>
+<p>说明：可以看到，R2分别和R1和R3建立了邻接关系，R4分别和R3和R5建立了邻接关系，状态为 FULL，邻居关系正常。</p>
+</blockquote>
+<p><em>步骤2：检查R2和R4的路由表</em></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/OSPF%E5%AE%9E%E9%AA%8C/3.png" alt></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/OSPF%E5%AE%9E%E9%AA%8C/4.png" alt></p>
+<blockquote>
+<p>说明：可以看到，R2和R4都已经学习到了全网所有网段的路由信息</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>计算机网络</category>
+      </categories>
+      <tags>
+        <tag>H3C</tag>
+        <tag>路由交换</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>IRF、聚合实验</title>
     <url>/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IRF%E3%80%81%E8%81%9A%E5%90%88%E5%AE%9E%E9%AA%8C/</url>
     <content><![CDATA[<hr>
