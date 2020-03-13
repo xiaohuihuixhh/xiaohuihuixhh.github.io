@@ -1,6 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>NAT实验</title>
+    <url>/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/NAT%E5%AE%9E%E9%AA%8C/</url>
+    <content><![CDATA[<hr>
+<a id="more"></a>
+
+<h3 id="实验拓扑"><a href="#实验拓扑" class="headerlink" title="实验拓扑"></a>实验拓扑</h3><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/NAT%E5%AE%9E%E9%AA%8C/tp.png" alt></p>
+<hr>
+<h3 id="实验需求"><a href="#实验需求" class="headerlink" title="实验需求"></a>实验需求</h3><ol>
+<li>按照图示配置 IP 地址 </li>
+<li>在 R1 上配置 EASY IP，使 PC1 和 PC2 可以访问互联网 </li>
+<li>在 R1 上配置 NAT Server，使 R3 可以访问 PC2 的 FTP 服务</li>
+</ol>
+<hr>
+<h3 id="实验解法"><a href="#实验解法" class="headerlink" title="实验解法"></a>实验解法</h3><h5 id="1-配置IP地址部分略"><a href="#1-配置IP地址部分略" class="headerlink" title="1. 配置IP地址部分略"></a>1. 配置IP地址部分略</h5><h5 id="2-在R1上配置默认路由指向公网，配置步骤略"><a href="#2-在R1上配置默认路由指向公网，配置步骤略" class="headerlink" title="2. 在R1上配置默认路由指向公网，配置步骤略"></a>2. 在R1上配置默认路由指向公网，配置步骤略</h5><h5 id="3-私网A通过在R1上配置EASY-IP访问互联网"><a href="#3-私网A通过在R1上配置EASY-IP访问互联网" class="headerlink" title="3. 私网A通过在R1上配置EASY IP访问互联网"></a>3. 私网A通过在R1上配置EASY IP访问互联网</h5><blockquote>
+<p>分析：根据需求得知，ACL需要配置允许 <code>192.168.1.0/24</code> 网段使用EASY IP，就无需配置NAT地 址池，直接在公网借口上配置即可，EASY IP会自动识别公网接口的IP地址。</p>
+</blockquote>
+<p><em>步骤1：R3上创建基本ACL，允许 <code>192.168.1.0/24</code> 网段</em></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[r1]acl basic 2000 </span><br><span class="line">[r1‐acl‐ipv4‐basic‐2000]rule permit source 192.168.1.0 0.0.0.255</span><br></pre></td></tr></table></figure>
+
+<p><em>步骤2：在R3的公网接口上配置EASY IP</em></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[r1]interface g0&#x2F;0 </span><br><span class="line">[r1‐GigabitEthernet0&#x2F;0]nat outbound 2000</span><br></pre></td></tr></table></figure>
+
+<p><em>步骤3：在PC1上Ping 公网上的R3，测试是否可以访问互联网</em></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/NAT%E5%AE%9E%E9%AA%8C/1.png" alt></p>
+<h5 id="4-在-R1-上配置-NAT-Server，使-R3-可以访问-PC2-的-FTP-服务"><a href="#4-在-R1-上配置-NAT-Server，使-R3-可以访问-PC2-的-FTP-服务" class="headerlink" title="4. 在 R1 上配置 NAT Server，使 R3 可以访问 PC2 的 FTP 服务"></a>4. 在 R1 上配置 NAT Server，使 R3 可以访问 PC2 的 FTP 服务</h5><blockquote>
+<p>分析：根据需求得知，需要发布FTPA的FTP服务，也就是把R1的公网地址的20 和21 端口映射到 FTPA的私网地址。</p>
+</blockquote>
+<p><em>步骤1：在R1的公网接口上配置NAT SERVER，映射端口20和21</em></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[r1‐GigabitEthernet0&#x2F;0]nat server protocol tcp global 100.1.1.1 20 21 inside 192 .168.1.2 20 21</span><br></pre></td></tr></table></figure>
+
+<p><em>步骤2：在R3上测试是否能够通过R1的公网地址访问FTPA的FTP服务</em></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/NAT%E5%AE%9E%E9%AA%8C/2.png" alt></p>
+]]></content>
+      <categories>
+        <category>计算机网络</category>
+      </categories>
+      <tags>
+        <tag>H3C</tag>
+        <tag>NAT</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>OSPF实验</title>
     <url>/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/OSPF%E5%AE%9E%E9%AA%8C/</url>
     <content><![CDATA[<hr>
